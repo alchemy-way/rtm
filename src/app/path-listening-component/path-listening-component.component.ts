@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, UrlSegment} from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import {ActivatedRoute, UrlSegment} from '@angular/router';
   templateUrl: './path-listening-component.component.html',
   styleUrls: ['./path-listening-component.component.css']
 })
-export class PathListeningComponentComponent implements OnInit {
+export class PathListeningComponentComponent implements OnInit, OnDestroy {
 
   @Output() path = 'Not yet set';
 
@@ -14,15 +14,17 @@ export class PathListeningComponentComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute
-  ) {
-    console.log(`** PathListeningComponent.constructor, id=${this.id}`);
+  ) {}
+
+  ngOnInit(): void {
+  console.log(`** PathListeningComponent.constructor, id=${this.id}`);
     this.activatedRoute.url.subscribe((segments) => {
       this.onRouteChanged(segments);
     });
   }
 
-  ngOnInit() {
-    console.log('listening component init');
+  ngOnDestroy(): void {
+    console.log('<<< On Destroy');
   }
 
   onRouteChanged(segments: UrlSegment[]) {

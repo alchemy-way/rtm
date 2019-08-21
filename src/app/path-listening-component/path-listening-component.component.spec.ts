@@ -55,14 +55,18 @@ describe('PathListeningComponentComponent', () => {
 
     it('should change path when navigating', fakeAsync(() => {
       router.navigateByUrl('/one');
+      console.log('navigate to one');
       tick();
       expect(location.path()).toBe('/one');
       expect(component.path).toBe('one');
+
+      console.log('navigate to two');
       router.navigateByUrl('/two');
       tick();
       expect(location.path()).toBe('/two');
       expect(component.path).toBe('two');
 
+      console.log('navigate to three');
       router.navigateByUrl('/three');
       tick();
       expect(location.path()).toBe('/three');
