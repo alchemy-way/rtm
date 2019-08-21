@@ -1,27 +1,24 @@
-# Rtm
+### Routing Testing Module - Test
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+This is a project to try to understand why the router provided by
+RoutingTestingModule does not trigger an updated on the ActivatedRoute.url 
+parameter.  
 
-## Development server
+It has one component that subscribes to the ActivatedRoute.url - 
+When that value changes, it updates the `path` variable in the component
+to the value of the url segments. It also displays the value in the html
+template for visual confirmation.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+There are two test suites inside the PathListeningComponent module:
+One runs a set of tests using RouterTestingModule and the other runs
+the same sorts of specs using the ActivatedRouteStub method described
+here: https://angular.io/guide/testing#activatedroutestub
 
-## Code scaffolding
+I would expect the RoutingTestingModule to trigger a change in the
+ActivatedRoute.url when calling navigate, but it does not.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+For confirmation that the path is indeed changing in the RouterTestingModule
+after calling navigate and tick I also do an expect on the Location.path()
+and this passes.  But, again, the ActivatedRoute does not update on the
+component.  I would expect the behavior to be the same between the test
+and the manual testing.
